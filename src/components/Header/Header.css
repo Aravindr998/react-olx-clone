@@ -165,3 +165,11 @@
     display: none;
   }
 }
+
+.login-span{
+  cursor: pointer;
+}
+.logout-button{
+  cursor: pointer;
+  font-weight: 700;
+}

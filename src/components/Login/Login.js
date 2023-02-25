@@ -1,33 +1,56 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import { FirebaseContext } from '../../store/Context'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
 
 function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const emailRef = useRef()
+  const passwordRef = useRef()
   const { firebase } = useContext(FirebaseContext)
   const auth = getAuth(firebase)
   const handleLogin = (e) => {
     e.preventDefault()
-    signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      navigate('/')
-    })
-    .catch((error) => {
-      console.log(error)
-      alert(error.message)
-    })
+    if(emailRef.current.value.trim() == '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailRef.current.value))){
+      emailRef.current.classList.add('error-input')
+    }else{
+      emailRef.current.classList.remove('error-input')
+    }
+    if(passwordRef.current.value.trim() == ''){
+      passwordRef.current.classList.add('error-input')
+    }else{
+      passwordRef.current.classList.remove('error-input')
+    }
+    if(emailRef.current.classList.contains('error-input') || passwordRef.current.classList.contains('error-input')){
+      return
+    }
+    if(!loading){
+      setLoading(true)
+      signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        setLoading(false)
+        navigate('/')
+      })
+      .catch((error) => {
+        setLoading(false)
+        console.log(error)
+        alert(error.message)
+      })
+    }
   }
   return (
     <div>
+      <div className='backdrop'></div>
       <div className="loginParentDiv">
-        <img width="200px" height="200px" src='/Images/olx-logo.png'></img>
-        <form onSubmit={handleLogin}>
-          <label htmlFor="email">Email</label>
-          <br />
+        <div className='guitar-image'>
+          <img width="100px" height="100px" src='/Images/loginEntryPointPost.png'></img>
+          <p>Help us become one of the safest places to buy and sell</p>
+        </div>
+        <form className='login-form' onSubmit={handleLogin}>
           <input
             className="input"
             type="email"
@@ -35,23 +58,22 @@ function Login() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder='Email'
+            ref={emailRef}
           />
-          <br />
-          <label htmlFor="lname">Password</label>
-          <br />
           <input
             className="input"
             type="password"
-            id="lname"
+            id="password"
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder='Password'
+            ref={passwordRef}
           />
-          <br />
-          <br />
-          <button>Login</button>
+          <button>{loading ? 'Loading...' : 'Login'}</button>
         </form>
-        <a>Signup</a>
+        <Link style={{color: 'black'}} to='/signup'>Signup</Link>
       </div>
     </div>
   )

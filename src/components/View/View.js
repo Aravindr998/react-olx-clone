@@ -37,7 +37,7 @@ function View() {
         {userDetails && <div className="contactDetails">
           <p>Seller details</p>
           <p>{userDetails.username}</p>
-          <p>{userDetails.phone}</p>
+          <p>{userDetails?.phone}</p>
         </div>}
       </div>
     </div>

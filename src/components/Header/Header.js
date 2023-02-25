@@ -9,19 +9,32 @@ import { AuthContext, FirebaseContext } from '../../store/Context'
 import { getAuth, signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import LoginModal from '../UI/LoginModal'
+import { LoginContext } from '../../store/LoginContext'
 
 function Header() {
+  const { login, setLogin } = useContext(LoginContext)
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
+  let userHeader = <span className='login-span' onClick={() => setLogin(true)}>Login</span>
+  if(user){
+    userHeader = <span>{user.displayName}</span>
+  }
   const {firebase} = useContext(FirebaseContext)
   const auth = getAuth(firebase)
   const signOutHandler = (e) => {
     signOut(auth)
     navigate('/login')
   }
+  const sellClickHandler = (e) => {
+    if(user){
+      navigate('/create')
+    }else{
+      setLogin(true)
+    }
+  }
   return (
     <div className="headerParentDiv">
-      <LoginModal/>
+      {login && <LoginModal/>}
       <div className="headerChildDiv">
         <div className="brandName">
           <Logo></Logo>
@@ -47,11 +60,11 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>{user ? user.displayName : 'Login'}</span>
+          {userHeader}
           <hr />
         </div>
-        {user && <span onClick={signOutHandler} >Logout</span>}
-        <div className="sellMenu">
+        {user && <span className='logout-button' onClick={signOutHandler} >Logout</span>}
+        <div className="sellMenu" onClick={sellClickHandler}>
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>

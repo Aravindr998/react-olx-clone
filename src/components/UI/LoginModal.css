@@ -1,3 +1,81 @@
 .loginModal{
   position: fixed;
+  top: 50%;
+  left: 35%;
+  transform: translateX(-30%) !important;
+  transform: translateY(-50%) !important;
+  z-index: 11;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+}
+.backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+.picture-parent{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+}
+.picture{
+  width: 5rem;
+}
+.google-sign-in{
+  background-color: transparent;
+  font-weight: 600;
+  padding: 1rem 0.5rem;
+  border: solid 2px #002f34;
+  border-radius: 0.25rem;
+  color: #002f34;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0rem;
+}
+.google-sign-in:hover{
+  outline: solid 5px black;
+  outline-offset: -5px;
+  color: black;
+}
+.google-button-parent{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.a-tag{
+  color: #002f34;
+  font-weight: 600;
+}
+.bottom-text{
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.picture-parent p{
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #002f34;
+}
+.close-button-parent{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.close-button-parent button{
+  border: none;
+  background-color: transparent;
 }
