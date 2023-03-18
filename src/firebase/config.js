@@ -3,13 +3,13 @@ import {getAuth} from 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
 const firebaseConfig = {
-  apiKey: "AIzaSyCDMqgkqtXn9QqMqpS6EzY3l6-pDuAFi1s",
-  authDomain: "olx-clone-8078f.firebaseapp.com",
-  projectId: "olx-clone-8078f",
-  storageBucket: "olx-clone-8078f.appspot.com",
-  messagingSenderId: "963594793279",
-  appId: "1:963594793279:web:128d50e5ec60f8a1fd238a",
-  measurementId: "G-097N8GC8W5"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APPID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID
 }
 const firebase = initializeApp(firebaseConfig)
 const auth = getAuth(firebase)
